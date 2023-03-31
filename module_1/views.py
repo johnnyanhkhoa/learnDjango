@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 from module_1.models import *
 from module_1.forms import * 
 
@@ -19,6 +20,9 @@ def create_rifle(request):
             post.name = frm_create_rifle.cleaned_data['name']
             post.place_of_origin = frm_create_rifle.cleaned_data['place_of_origin']
             post.save()
+            messages.success(request, 'Data created !')
+        else:
+            messages.error(request, 'Not valid !')
     
     return render(request, 'module_1/create_rifle.html', {
         'frm_create_rifle' : frm_create_rifle,
