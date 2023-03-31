@@ -17,11 +17,11 @@
 
   <form method="post" class="">
     {% csrf_token %}
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name">
+    <label>{{ frm_create_rifle.name.label }}</label>
+              {{ frm_create_rifle.name }}
     <br>
-    <label for="place_of_origin">Place of origin:</label><br>
-    <input type="text" id="place_of_origin" name="place_of_origin"><br><br>
+    <label>{{ frm_create_rifle.place_of_origin.label }}</label>
+              {{ frm_create_rifle.place_of_origin }}
     <a class="btn btn-secondary" href="{% url 'module_1:index' %}">Back</a>
     <button type="submit" class="btn btn-primary" name="btncreaterifle" value="Rifle creation">Save</button>
   </form> 

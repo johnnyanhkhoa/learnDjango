@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from module_1.models import *
+from module_1.forms import * 
 
 # Create your views here.
 def index(request):
@@ -10,13 +11,15 @@ def index(request):
     })    
 
 def create_rifle(request):
+    frm_create_rifle = FormCreateRifle()
     if request.POST.get('btncreaterifle'):
-        name = request.POST.get('name')
-        place_of_origin = request.POST.get('place_of_origin')
-        
-        rifle_info = Rifle(name=name,place_of_origin=place_of_origin)
-        rifle_info.save()
+        frm_create_rifle = FormCreateRifle(request.POST, Rifle)
+        if frm_create_rifle.is_valid():
+            post = frm_create_rifle.save(commit=False)
+            post.name = frm_create_rifle.cleaned_data['name']
+            post.place_of_origin = frm_create_rifle.cleaned_data['place_of_origin']
+            post.save()
     
     return render(request, 'module_1/create_rifle.html', {
-        
+        'frm_create_rifle' : frm_create_rifle,
     })
