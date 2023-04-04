@@ -13,3 +13,19 @@ class FormCreateRifle(forms.ModelForm):
     class Meta:
         model = Rifle
         fields = ['name', 'place_of_origin']
+
+
+class FormSignup(forms.ModelForm):
+    email = forms.EmailField(label='Email', widget=forms.TextInput(attrs={
+        "class": "form-control", "placeholder": "Email",
+    }))
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={
+        "class": "form-control", "placeholder": "Mật khẩu",
+    }))
+    password_confirm = forms.CharField(label='Password confirm', widget=forms.PasswordInput(attrs={
+        "class": "form-control", "placeholder": "Xác nhận Mật khẩu",
+    }))
+
+    class Meta:
+        model = User
+        fields = ['email', 'password']

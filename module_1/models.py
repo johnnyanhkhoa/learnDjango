@@ -7,3 +7,10 @@ class Rifle(models.Model):
     
     def __str__(self):
         return self.name
+    
+class User(models.Model):
+    email = models.EmailField(blank=False)
+    password = models.CharField(max_length=100, blank=False)
+    
+    def __str__(self):
+        return self.email
