@@ -4,6 +4,7 @@ from module_1.models import *
 from module_1.forms import * 
 from django.contrib.auth.hashers import PBKDF2PasswordHasher, Argon2PasswordHasher, CryptPasswordHasher
 from base64 import encode
+from django.db.models import Q
 
 # Create your views here.
 def signup(request):
@@ -83,3 +84,68 @@ def create_rifle(request):
     return render(request, 'module_1/create_rifle.html', {
         'frm_create_rifle' : frm_create_rifle,
     })
+    
+
+def create_author_and_book(request):
+    if 's_user' not in request.session:
+        return redirect('module_1:login')
+    
+    # Create author
+    formauthor = FormAuthor()
+    if request.POST.get('btncreateauthor'):
+        formauthor = FormAuthor(request.POST)
+        if formauthor.is_valid():
+            # Save info to DB
+            request.POST.__mutable = True
+            post = formauthor.save(commit=False)
+            post.save()
+            messages.success(request, 'Data created !')
+        else:
+            print(formauthor.errors.as_data())
+            messages.error(request, str(formauthor.errors.as_data()))
+        return redirect('module_1:create_author_and_book')
+
+    # Create book
+    formbook = FormBook()
+    if request.POST.get('btncreatebook'):
+        formbook = FormBook(request.POST)
+        if formbook.is_valid():
+            # Save info to DB
+            request.POST.__mutable = True
+            post = formbook.save(commit=False)
+            post.save()
+            messages.success(request, 'Data created !')
+        else:
+            print(formbook.errors.as_data())
+            messages.error(request, str(formbook.errors.as_data()))
+        return redirect('module_1:create_author_and_book')
+
+    
+    return render(request, 'module_1/create_author_and_book.html', {
+        'formauthor' : formauthor,
+        'formbook' : formbook,
+    })
+
+
+def view_book(request):
+    if 's_user' not in request.session:
+        return redirect('module_1:login')
+    
+    list_of_books = Book.objects.filter()
+    
+    
+    list_author = Author.objects.all()
+    if request.POST.get('btnfilterbook'):
+        author_id = request.POST.get('author_id')
+        if author_id != '0':
+            q = ((Q(author=author_id)))
+            list_of_books = Book.objects.filter(q)
+        elif author_id == '0':
+            list_of_books = Book.objects.filter()
+    
+    return render(request, 'module_1/view_book.html', {
+        'list_of_books' : list_of_books,
+        'list_author' : list_author,
+    })    
+
+    

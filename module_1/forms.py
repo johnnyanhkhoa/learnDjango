@@ -29,3 +29,29 @@ class FormSignup(forms.ModelForm):
     class Meta:
         model = User
         fields = ['email', 'password']
+
+
+class FormAuthor(forms.ModelForm):
+    name = forms.CharField(max_length=150, label='Name: ', widget=forms.TextInput(attrs={
+        "class": "form-control", "placeholder": "Input author name",
+    }))
+
+    class Meta:
+        model = Author
+        fields = ['name']
+
+
+
+# Get queryset
+author_list = Author.objects.only('id')
+class FormBook(forms.ModelForm):
+    name = forms.CharField(max_length=150, label='Book name: ', widget=forms.TextInput(attrs={
+        "class": "form-control", "placeholder": "Input book name",
+    }))
+    author = forms.ModelChoiceField(required=False, queryset=author_list ,widget=forms.Select(attrs={
+        "class": "form-control", "placeholder": "Author name",
+    }))
+
+    class Meta:
+        model = Book
+        fields = ['name','author']

@@ -16,24 +16,35 @@
   <table style="width:100%">
     <tr>
       <th>ID</th>
-      <th>NAME</th>
-      <th>PLACE OF ORIGIN</th>
+      <th>Author</th>
+      <th>Book name</th>
     </tr>
-    {% for rifle in list_of_rifles %}
+    {% for book in list_of_books %}
     <tr>
-      <td>{{rifle.id}}</td>
-      <td>{{rifle.name}}</td>
-      <td>{{rifle.place_of_origin}}</td>
+      <td>{{book.id}}</td>
+      <td>{{book.author}}</td>
+      <td>{{book.name}}</td>
     </tr>
     {% endfor %}
   </table>
   <br>
-  <a class="btn btn-primary" href="{% url 'module_1:create_rifle' %}">Create rifle</a>
+  <div class="row">
+    <div class="col">
+      <form method="post">
+        {% csrf_token %}
+        <label class="fw-bold text-dark" for="author_id">Author name</label>
+        <select name="author_id" class="form-select" required>
+          <option value="0">______</option>
+          {% for author in list_author %}
+          <option value="{{ author.id }}">{{ author.name }}</option>
+          {% endfor %}
+        </select>
+    </div>
+  </div>
   <br>
-  <br>
-  <a class="btn btn-primary" href="{% url 'module_1:create_author_and_book' %}">Create book</a>
-  <br>
-  <a class="btn btn-secondary" href="{% url 'module_1:view_book' %}">View book</a>
+  <button type="submit" class="btn btn-primary" name="btnfilterbook" value="Filter input">Filter</button>
+  </form>
+  </div>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
