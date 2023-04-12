@@ -58,9 +58,9 @@ def index(request):
     if 's_user' not in request.session:
         return redirect('module_1:login')
     
-    list_of_rifles = Rifle.objects.filter()
+    list_of_rifles = Rifle.objects.all()
     
-    return render(request, 'module_1/template1.html', {
+    return render(request, 'module_1/index.html', {
         'list_of_rifles' : list_of_rifles,
     })    
 
@@ -147,5 +147,17 @@ def view_book(request):
         'list_of_books' : list_of_books,
         'list_author' : list_author,
     })    
+    
+
+def view_rifle(request):
+    if 's_user' not in request.session:
+        return redirect('module_1:login')
+    
+    list_of_rifles = Rifle.objects.all()
+    
+    return render(request, 'module_1/view_rifle.html', {
+        'list_of_rifles' : list_of_rifles,
+  
+    }) 
 
     

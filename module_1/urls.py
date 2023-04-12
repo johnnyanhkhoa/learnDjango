@@ -10,5 +10,6 @@ urlpatterns = [
     path('create_rifle/', views.create_rifle, name='create_rifle'),
     path('create_author_and_book/', views.create_author_and_book, name='create_author_and_book'),
     path('view_book/', views.view_book, name='view_book'),
+    path('view_rifle/', views.view_rifle, name='view_rifle'),
     
 ]

@@ -1,0 +1,102 @@
+{% extends 'module_1/_Master.html' %}
+{% block title_tab %}Module 1 | General view{% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block main_content %}
+{% comment %} khai báo thư viện cho dataTable {% endcomment %}
+<link rel="stylesheet" href="{% static 'module_1/vendors/simple-datatables/style.css' %}">
+<style>
+    table {
+        counter-reset: rowNumber;
+      }
+      
+      table tbody tr th::before {
+        display: table-cell;
+        counter-increment: rowNumber;
+        content: counter(rowNumber);
+        padding-right: 0.3em;
+        text-align: right;
+      }
+</style>
+
+<div id="main">
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <div class="alert alert-success" role="alert">{{message}}</div>
+    {% endif %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger" role="alert">{{message}}</div>
+    {% endif %}
+    {% endfor%}
+    {% endif %}
+    <header class="mb-3">
+        <a href="#" class="burger-btn d-block d-xl-none">
+            <i class="bi bi-justify fs-3"></i>
+        </a>
+    </header>
+    <div class="page-heading">
+        <div class="page-title">
+            <div class="row">
+                <div class="col-12 col-md-6 order-md-1 order-last">
+                    <h3>Rifles</h3>
+                    <p class="text-subtitle text-muted">Rifles datatable</p>
+                </div>
+                <div class="col-12 col-md-6 order-md-2 order-first">
+                    <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">DataTable</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <section class="section">
+            <div class="card">
+                <div class="card-header pull-right">
+                    Rifles information
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped" id="table1">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>ID</th>
+                                <th>NAME</th>
+                                <th>PLACE OF ORIGIN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rifle in list_of_rifles %}
+                            <tr>
+                            <th></th>
+                            <td>{{rifle.id}}</td>
+                            <td>{{rifle.name}}</td>
+                            <td>{{rifle.place_of_origin}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+
+</div>
+
+
+
+
+<script src="{% static 'module_1/vendors/simple-datatables/simple-datatables.js' %}"></script>
+<script>
+    // Simple Datatable
+    let table1 = document.querySelector('#table1');
+    let dataTable = new simpleDatatables.DataTable(table1);
+</script>
+
+
+{% endblock %}
