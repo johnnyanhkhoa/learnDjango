@@ -19,35 +19,21 @@
       <th>Author</th>
       <th>Book name</th>
     </tr>
-    {% for book in list_of_books %}
+    {% for result in results %}
     <tr>
-      <td>{{book.id}}</td>
-      <td>{{book.author}}</td>
-      <td>{{book.name}}</td>
+      <td>{{result.id}}</td>
+      <td>{{result.author}}</td>
+      <td>{{result.name}}</td>
     </tr>
     {% endfor %}
   </table>
   <br>
-  <div class="row">
-    <div class="col">
-      <form method="post">
-        {% csrf_token %}
-        <label class="fw-bold text-dark" for="author_id">Author name</label>
-        <select name="author_id" class="form-select" required>
-          <option value="0">______</option>
-          {% for author in list_author %}
-          <option value="{{ author.id }}">{{ author.name }}</option>
-          {% endfor %}
-        </select>
-    </div>
-  </div>
-  <br>
-  <button type="submit" class="btn btn-primary" name="btnfilterbook" value="Filter input">Filter</button>
-  <br>
-  <a class="btn btn-secondary" href="{% url 'module_1:index' %}">Back</a>
-  </form>
+  <a class="btn btn-secondary" href="{% url 'module_1:view_book' %}">Back</a>
   <br><br>
-  <a class="btn btn-secondary" href="{% url 'module_1:search' %}">Search</a>
+  <form method="GET" action="{% url 'module_1:search' %}">
+    <input type="text" name="query" placeholder="Tìm kiếm...">
+    <button type="submit">Tìm kiếm</button>
+  </form>
   </div>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
